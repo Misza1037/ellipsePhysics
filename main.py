@@ -12,13 +12,14 @@ screen.fill((255, 255, 255))
 
 dx = screenSize[0]//2
 dy = screenSize[1]//2
-r = 300
+rx = 300
+ry = 200
 
 
 def draw_line(x, y):
-    a = pochodna(x)
+    a = -x * ry**2 / (y * rx**2)
     print(a)
-    b = dy+(y - a*x)
+    b = ry**2 / y + 300
     print(b)
     pygame.draw.line(screen, (0, 0, 0), (0, a*-dx + b), (2*dx, a*dx + b))
 
@@ -28,12 +29,15 @@ def pochodna(x):
 
 
 def f(x):
-    return sqrt(r**2 - x**2)
+    return ry * sqrt(1 - x**2 / rx**2)
 
 
-pygame.draw.circle(screen, (0, 0, 0), (dx, dy), r)
-draw_line(50, f(50))
-pygame.draw.rect(screen, (255, 0, 0), (dx+50, dy+f(50), 10, 10))
+x = 50
+y = f(x)
+
+pygame.draw.ellipse(screen, (0, 0, 0), (dx - rx, dy - ry, 2*rx, 2*ry))
+draw_line(x, y)
+pygame.draw.rect(screen, (255, 0, 0), (dx+x, dy+y, 10, 10))
 pygame.display.flip()
 
 for i in range(300):
