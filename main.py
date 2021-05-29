@@ -1,4 +1,6 @@
 #main.py
+w = open("czasy.txt", "w")
+
 from math import sqrt
 import pygame
 from time import sleep
@@ -10,30 +12,33 @@ screen.fill((255, 255, 255))
 
 dx = screenSize[0]//2
 dy = screenSize[1]//2
-rx = 300
-ry = 200
+r = 300
 
 
 def draw_line(x, y):
     a = pochodna(x)
     print(a)
-    b = y - a*x
+    b = dy+(y - a*x)
     print(b)
     pygame.draw.line(screen, (0, 0, 0), (0, a*-dx + b), (2*dx, a*dx + b))
 
 
 def pochodna(x):
-    return -(ry*x) / ((rx**2) * sqrt(ry * (1 - (x**2 / rx**2))))
+    return -x / f(x)
 
 
 def f(x):
-    return -ry * sqrt((1 - (x**2 / rx**2)))
+    return sqrt(r**2 - x**2)
 
 
-pygame.draw.ellipse(screen, (0, 0, 0), (dx-rx, dy-ry, 2*rx, 2*ry))
-draw_line(100, f(100))
-pygame.draw.rect(screen, (255, 0, 0), (dx+100, dy+f(100), 10, 10))
+pygame.draw.circle(screen, (0, 0, 0), (dx, dy), r)
+draw_line(50, f(50))
+pygame.draw.rect(screen, (255, 0, 0), (dx+50, dy+f(50), 10, 10))
 pygame.display.flip()
+
+for i in range(300):
+    w.write(f'{i};{pochodna(i)} \n')
 
 sleep(4)
 pygame.quit()
+w.close()
