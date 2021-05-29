@@ -15,16 +15,21 @@ ry = 200
 
 
 def draw_line(x, y):
-    a, b = pochodna(x), sqrt(ry**2 * (1 - (x**2 / rx**2))) - pochodna(x)*x
+    a, b = pochodna(x), f(x) - pochodna(x)*x
     pygame.draw.line(screen, (0, 0, 0), (0, a*-dx + b), (2*dx, a*dx + b))
 
 
 def pochodna(x):
-    return -(ry*x)/((rx**2) * (ry*(1-((x**2)/(rx**2))))**0.5)
+    return (ry*x) / ((rx**2) * sqrt(ry * (1-((x**2) / (rx**2)))))
+
+
+def f(x):
+    return sqrt(ry**2 * (1 - (x**2 / rx**2)))
 
 
 pygame.draw.ellipse(screen, (0, 0, 0), (dx-rx, dy-ry, 2*rx, 2*ry))
-draw_line(100, 100)
+draw_line(100, f(100))
+pygame.draw.rect(screen, (255, 0, 0), (dx+100, f(100), 10, 10))
 pygame.display.flip()
 
 sleep(4)
